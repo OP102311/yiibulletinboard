@@ -1,0 +1,8 @@
+{
+        "require": {  
+                "yiisoft/yii": "~1.1"
+        } ,
+        "config":{
+                "vendor-dir": "protected/vendor"
+        }
+}
