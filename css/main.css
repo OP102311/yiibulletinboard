@@ -223,7 +223,7 @@ div.breadcrumbs span
 .comment
 {
 	-moz-border-radius:7px;
-	padding: 10px;
+	padding: 5px;
 	background: #F5F5F5;
 	margin: 5px 0;
 }
@@ -238,6 +238,12 @@ div.breadcrumbs span
 	margin: 5px 0;
 	padding: 0 0 3px;
 	border-bottom: 1px solid #DDD;
+}
+
+.comment .rating
+{
+	text-align: right;
+	padding: 0 5px 5px 5px;
 }
 
 .comment .time

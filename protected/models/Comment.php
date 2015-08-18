@@ -1,23 +1,24 @@
 <?php
-/**
- * The followings are the available columns in table 'tbl_comment':
- * @property integer $id
- * @property string $content
- * @property integer $status
- * @property integer $create_time
- * @property string $author
- * @property string $email
- * @property string $url
- * @property integer $post_id
- */
+
 class Comment extends CActiveRecord
 {
+	/**
+	 * The followings are the available columns in table 'tbl_comment':
+	 * @var integer $id
+	 * @var string $content
+	 * @var integer $status
+	 * @var integer $create_time
+	 * @var string $author
+	 * @var string $email
+	 * @var string $url
+	 * @var integer $post_id
+	 */
 	const STATUS_PENDING=1;
 	const STATUS_APPROVED=2;
 
 	/**
 	 * Returns the static model of the specified AR class.
-	 * @return static the static model class
+	 * @return CActiveRecord the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -56,6 +57,7 @@ class Comment extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'post' => array(self::BELONGS_TO, 'Post', 'post_id'),
+			'ratings' => array(self::HAS_MANY, 'Rating', 'comment_id'),
 		);
 	}
 
@@ -73,6 +75,8 @@ class Comment extends CActiveRecord
 			'email' => 'Email',
 			'url' => 'Website',
 			'post_id' => 'Post',
+			'rating_sum' => 'Rating sum',
+			'rating_count' => 'Rating count',
 		);
 	}
 
@@ -96,7 +100,12 @@ class Comment extends CActiveRecord
 			$post=$this->post;
 		return $post->url.'#c'.$this->id;
 	}
-
+	public function getPostName($post=null)
+	{
+		if($post===null)
+			$post=$this->post;
+		return $post->title;
+	}
 	/**
 	 * @return string the hyperlink display for the current comment's author
 	 */

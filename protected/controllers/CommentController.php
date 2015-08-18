@@ -29,6 +29,7 @@ class CommentController extends Controller
 		return array(
 			array('allow', // allow authenticated users to access all actions
 				'users'=>array('@'),
+				'actions'=>array('rating'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -110,6 +111,25 @@ class CommentController extends Controller
 		}
 		else
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+	}
+
+
+
+	public function actionRating()
+	{
+		if(Yii::app()->request->isAjaxRequest)
+		{
+			$model = Comment::model()->findbyPk($_POST['comment_id']);
+			if ($_POST['vote_type']==1)
+				$model->rating_sum = $model->rating_sum + 1;
+			elseif ($_POST['vote_type']==0)
+				$model->rating_sum = $model->rating_sum - 1;
+
+			$model->save();
+			echo CJSON::encode( array (
+				'div'=>'Thank you for voting!',
+			) );
+		}
 	}
 
 	/**
