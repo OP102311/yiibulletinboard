@@ -120,20 +120,20 @@ class CommentController extends Controller
 		if(Yii::app()->request->isAjaxRequest)
 		{
 			$model = Comment::model()->findbyPk($_POST['comment_id']);
-			if ($_POST['vote_type']==1)
+			if ($_POST['vote_type']==0)
 			{
 				$model->rating_sum = $model->rating_sum + 1;
 			}
-			elseif ($_POST['vote_type']==0)
+			elseif ($_POST['vote_type']==1)
 			{
 				$model->rating_sum = $model->rating_sum - 1;
 			}
 			$model->rating_count = $model->rating_count + 1;
 			$model->save();
 			echo CJSON::encode( array (
-				'div'=>'Vote accepted',
 				'status'=>'success',
-				'info'=>"Rating"
+				'count'=>$model->rating_count,
+				'rating'=>$model->rating_sum,
 
 			) );
 		}
