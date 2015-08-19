@@ -121,13 +121,20 @@ class CommentController extends Controller
 		{
 			$model = Comment::model()->findbyPk($_POST['comment_id']);
 			if ($_POST['vote_type']==1)
+			{
 				$model->rating_sum = $model->rating_sum + 1;
+			}
 			elseif ($_POST['vote_type']==0)
+			{
 				$model->rating_sum = $model->rating_sum - 1;
-
+			}
+			$model->rating_count = $model->rating_count + 1;
 			$model->save();
 			echo CJSON::encode( array (
-				'div'=>'Thank you for voting!',
+				'div'=>'Vote accepted',
+				'status'=>'success',
+				'info'=>"Rating"
+
 			) );
 		}
 	}
