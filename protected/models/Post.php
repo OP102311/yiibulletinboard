@@ -186,11 +186,9 @@ class Post extends CActiveRecord
 	public function search()
 	{
 		$criteria=new CDbCriteria;
-
 		$criteria->compare('title',$this->title,true);
-
 		$criteria->compare('status',$this->status);
-
+		$criteria->compare('author_id',Yii::app()->user->id);
 		return new CActiveDataProvider('Post', array(
 			'criteria'=>$criteria,
 			'sort'=>array(
