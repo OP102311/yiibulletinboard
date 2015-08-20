@@ -17,11 +17,6 @@ Yii::app()->getClientScript()->registerScript('delete', $deleteJS);
 ?>
 <div class="comment" id="c<?php echo $data->id; ?>">
 
-	<?php echo CHtml::link("#{$data->id}", $data->url, array(
-		'class'=>'cid',
-		'title'=>'Permalink to this comment',
-	)); ?>
-
 	<div class="author">
 		<?php echo $data->authorLink; ?> says on
 		<?php echo CHtml::link(CHtml::encode($data->post->title), $data->post->url); ?>

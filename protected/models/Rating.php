@@ -2,19 +2,7 @@
 
 class Rating extends CActiveRecord
 {
-    /**
-     * The followings are the available columns in table 'tbl_user':
-     * @var integer $id
-     * @var string $username
-     * @var string $password
-     * @var string $email
-     * @var string $profile
-     */
 
-    /**
-     * Returns the static model of the specified AR class.
-     * @return CActiveRecord the static model class
-     */
     public static function model($className=__CLASS__)
     {
         return parent::model($className);
@@ -36,8 +24,32 @@ class Rating extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-
+            array('comment_id', 'unique', 'criteria'=>array(
+                'condition'=>'`user_id`=:user_id',
+                'params'=>array(
+                    ':user_id'=>$this->user_id
+                )
+            )),
         );
+    }
+
+    public function beforeValidate()
+    {
+        if (parent::beforeValidate()) {
+
+            $validator = CValidator::createValidator('unique', $this, 'comment_id', array(
+                'criteria' => array(
+                    'condition'=>'`user_id`=:user_id',
+                    'params'=>array(
+                        ':user_id'=>$this->user_id
+                    )
+                )
+            ));
+            $this->getValidatorList()->insertAt(0, $validator);
+
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -49,6 +61,7 @@ class Rating extends CActiveRecord
         // class name for the relations automatically generated below.
         return array(
             'comment' => array(self::BELONGS_TO, 'Comment', 'comment_id'),
+            'user' => array(self::BELONGS_TO, 'User', 'user_id'),
         );
     }
 
@@ -60,18 +73,8 @@ class Rating extends CActiveRecord
         return array(
             'id' => 'Id',
             'comment_id' => 'Comment id',
+            'user_id' => 'User id',
             'vote_type' => 'Vote type',
         );
     }
-
-    public function ratingUp()
-    {
-
-    }
-
-    public function ratingDown()
-    {
-
-    }
-
 }

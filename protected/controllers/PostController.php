@@ -203,7 +203,7 @@ class PostController extends Controller
 			}
 			if (isset($_POST['Comment'])) {
 				$user = User::model()->findbyPk(Yii::app()->user->id);
-				$comment->attributes = $_POST['Comment'];
+				$comment->setAttributes($_POST['Comment']);
 				$comment->author = $user->username;
 				$comment->email = $user->email;
 				if ($post->addComment($comment)) {

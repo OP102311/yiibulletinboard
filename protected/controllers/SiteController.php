@@ -110,7 +110,7 @@ class SiteController extends Controller
                         $this->render("registration", array('form' => $form));
                     } else {
                         $form->save();
-                        $this->redirect(Yii::app()->homeUrl);
+                        $this->render("registrationok");
                     }
                 } else {
                     $this->render("registration", array('form' => $form));

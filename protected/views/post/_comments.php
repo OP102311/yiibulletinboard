@@ -4,11 +4,6 @@
 <?php foreach ($comments as $comment): ?>
     <div class="comment" id="c<?php echo $comment->id; ?>">
 
-        <?php echo CHtml::link("#{$comment->id}", $comment->getUrl($post), array(
-            'class' => 'cid',
-            'title' => 'Permalink to this comment',
-        )); ?>
-
         <div class="author">
             <?php echo $comment->authorLink; ?> says:
         </div>
@@ -27,7 +22,7 @@
                    onclick="v(<?= $comment->id ?>,0,<?= Yii::app()->user->id ?>); return false;">+</a>
                 <span class="rating-o">
                     <span id="v<?= $comment->id ?>" class="rating">
-                    <?= " " . $comment->rating_sum . " " ?>
+                    <?= " " . $comment->rating_sum . "  (".$comment->rating_count.")" ?>
                     </span>
                 </span>
                 <a href="comment/rating" class="down" rel="nofollow"
